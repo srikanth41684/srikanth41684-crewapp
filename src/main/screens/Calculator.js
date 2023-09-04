@@ -3,34 +3,122 @@ import React from 'react';
 import {SafeAreaView} from 'react-native';
 import {useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
+import {useEffect} from 'react';
 
 const numbers = [
-  'C',
-  '+/-',
-  '%',
-  '/',
-  '7',
-  '8',
-  '9',
-  '*',
-  '4',
-  '5',
-  '6',
-  '-',
-  '1',
-  '2',
-  '3',
-  '+',
-  '.',
-  '0',
-  '<',
-  '=',
+  {
+    title: 'C',
+    operation: 'clear',
+  },
+  {
+    title: '+/-',
+    operation: 'addSub',
+  },
+  {
+    title: '%',
+    operation: 'modulus',
+  },
+  {
+    title: '/',
+    operation: 'divide',
+  },
+  {
+    title: '7',
+    operation: 'number',
+  },
+  {
+    title: '8',
+    operation: 'number',
+  },
+  {
+    title: '9',
+    operation: 'number',
+  },
+  {
+    title: '*',
+    operation: 'multi',
+  },
+  {
+    title: '4',
+    operation: 'number',
+  },
+  {
+    title: '5',
+    operation: 'number',
+  },
+  {
+    title: '6',
+    operation: 'number',
+  },
+  {
+    title: '-',
+    operation: 'sub',
+  },
+  {
+    title: '1',
+    operation: 'number',
+  },
+  {
+    title: '2',
+    operation: 'number',
+  },
+  {
+    title: '3',
+    operation: 'number',
+  },
+  {
+    title: '+',
+    operation: 'add',
+  },
+  {
+    title: '.',
+    operation: 'number',
+  },
+  {
+    title: '0',
+    operation: 'number',
+  },
+  {
+    title: '>',
+    operation: 'back',
+  },
+  {
+    title: '=',
+    operation: 'equal',
+  },
 ];
 
 const Calculator = () => {
   const [commObj, setCommObj] = useState({
-    calsiValue: '456465',
+    calsiValue: '',
+    total: '',
+    value: '',
+    operation: '',
   });
+
+  useEffect(() => {}, [commObj]);
+
+  function calsioHandler(value, sign) {
+    console.log(value, sign);
+    if (sign !== 'clear' && sign !== 'back' && sign !== 'equal') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: prev.calsiValue !== '' ? prev.calsiValue + value : value,
+      }));
+    }
+
+    if (sign === 'clear') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: '',
+        total: '',
+      }));
+    }
+  }
+
+  useEffect(() => {
+    console.log('calsiocommObj------>', commObj);
+  }, [commObj]);
   return (
     <SafeAreaView
       style={{
@@ -66,6 +154,16 @@ const Calculator = () => {
               justifyContent: 'flex-end',
               alignItems: 'flex-end',
             }}>
+            <View>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: 'gray',
+                }}>
+                {commObj.total}
+              </Text>
+            </View>
             <View
               style={{
                 padding: 10,
@@ -99,7 +197,11 @@ const Calculator = () => {
                 }}>
                 {numbers.map((item, index) => {
                   return (
-                    <TouchableWithoutFeedback key={index}>
+                    <TouchableWithoutFeedback
+                      key={index}
+                      onPress={() => {
+                        calsioHandler(item.title, item.operation);
+                      }}>
                       <View
                         style={{
                           width: '20%',
@@ -114,7 +216,7 @@ const Calculator = () => {
                             fontWeight: 'bold',
                             color: '#000',
                           }}>
-                          {item}
+                          {item.title}
                         </Text>
                       </View>
                     </TouchableWithoutFeedback>
