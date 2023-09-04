@@ -3,6 +3,8 @@ import React from 'react';
 import ImagesScreen from './src/main/screens/ImagesScreen';
 import {Platform} from 'react-native';
 import {PermissionsAndroid} from 'react-native';
+import {useEffect} from 'react';
+import {AppState} from 'react-native';
 
 if (Platform.OS === 'android') {
   let permissions = [
@@ -18,6 +20,19 @@ if (Platform.OS === 'android') {
 }
 
 const App = () => {
+  useEffect(() => {
+    const trackUser = AppState.addEventListener('change', nextAppState => {
+      console.log('nextAppState---->', nextAppState);
+
+      if (nextAppState === 'active') {
+        trackUserLocationHandler();
+      }
+    });
+
+    return () => {
+      trackUser.remove();
+    };
+  }, []);
   return (
     <View>
       <Text>App</Text>
