@@ -5,6 +5,7 @@ import LogInScreen from '../main/screens/LogInScreen';
 import {useContext} from 'react';
 import {AppContext} from '../context/AppContext';
 import HomeScreen from '../main/screens/HomeScreen';
+import Calculator from '../main/screens/Calculator';
 
 const MainStack = createNativeStackNavigator();
 
@@ -13,11 +14,18 @@ const GlobalStackNav = () => {
   return (
     <MainStack.Navigator>
       {commAppState.userLogin ? (
-        <MainStack.Screen
-          name="home"
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
+        <>
+          <MainStack.Screen
+            name="home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <MainStack.Screen
+            name="calsi"
+            component={Calculator}
+            options={{headerShown: false}}
+          />
+        </>
       ) : (
         <MainStack.Screen
           name="login"

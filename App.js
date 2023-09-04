@@ -24,8 +24,9 @@ if (Platform.OS === 'android') {
 
 const App = () => {
   const [commAppState, setCommAppState] = useState({
-    userLogin: false,
+    userLogin: true,
   });
+
   useEffect(() => {
     const trackUser = AppState.addEventListener('change', nextAppState => {
       console.log('nextAppState---->', nextAppState);
