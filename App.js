@@ -1,6 +1,4 @@
-import {View, Text} from 'react-native';
 import React from 'react';
-import ImagesScreen from './src/main/screens/ImagesScreen';
 import {Platform} from 'react-native';
 import {PermissionsAndroid} from 'react-native';
 import {useEffect} from 'react';
@@ -26,7 +24,7 @@ if (Platform.OS === 'android') {
 
 const App = () => {
   const [commAppState, setCommAppState] = useState({
-    userLoggin: false,
+    userLogin: false,
   });
   useEffect(() => {
     const trackUser = AppState.addEventListener('change', nextAppState => {
