@@ -5,6 +5,11 @@ import {Platform} from 'react-native';
 import {PermissionsAndroid} from 'react-native';
 import {useEffect} from 'react';
 import {AppState} from 'react-native';
+import {AppContext} from './src/context/AppContext';
+import Geolocation from 'react-native-geolocation-service';
+import {useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import GlobalStackNav from './src/navigations/GlobalStackNav';
 
 if (Platform.OS === 'android') {
   let permissions = [
@@ -20,6 +25,9 @@ if (Platform.OS === 'android') {
 }
 
 const App = () => {
+  const [commAppState, setCommAppState] = useState({
+    userLoggin: false,
+  });
   useEffect(() => {
     const trackUser = AppState.addEventListener('change', nextAppState => {
       console.log('nextAppState---->', nextAppState);
@@ -33,11 +41,18 @@ const App = () => {
       trackUser.remove();
     };
   }, []);
+
+  function trackUserLocationHandler() {
+    Geolocation.getCurrentPosition(pos => {
+      console.log('getCurrentPosition----->', pos);
+    });
+  }
   return (
-    <View>
-      <Text>App</Text>
-      <ImagesScreen />
-    </View>
+    <AppContext.Provider value={{commAppState, setCommAppState}}>
+      <NavigationContainer>
+        <GlobalStackNav />
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 };
 
