@@ -5,12 +5,10 @@ import {TouchableWithoutFeedback} from 'react-native';
 
 const ImagesScreen = () => {
   function selectImagesHandler() {
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      cropping: true,
-    }).then(image => {
-      console.log(image);
+    ImagePicker.openPicker({
+      multiple: true,
+    }).then(images => {
+      console.log(images);
     });
   }
   return (
