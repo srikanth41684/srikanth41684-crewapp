@@ -23,15 +23,15 @@ const numbers = [
     operation: 'divide',
   },
   {
-    title: '7',
+    title: 7,
     operation: 'number',
   },
   {
-    title: '8',
+    title: 8,
     operation: 'number',
   },
   {
-    title: '9',
+    title: 9,
     operation: 'number',
   },
   {
@@ -39,15 +39,15 @@ const numbers = [
     operation: 'multi',
   },
   {
-    title: '4',
+    title: 4,
     operation: 'number',
   },
   {
-    title: '5',
+    title: 5,
     operation: 'number',
   },
   {
-    title: '6',
+    title: 6,
     operation: 'number',
   },
   {
@@ -55,15 +55,15 @@ const numbers = [
     operation: 'sub',
   },
   {
-    title: '1',
+    title: 1,
     operation: 'number',
   },
   {
-    title: '2',
+    title: 2,
     operation: 'number',
   },
   {
-    title: '3',
+    title: 3,
     operation: 'number',
   },
   {
@@ -72,10 +72,10 @@ const numbers = [
   },
   {
     title: '.',
-    operation: 'number',
+    operation: 'dot',
   },
   {
-    title: '0',
+    title: 0,
     operation: 'number',
   },
   {
@@ -92,7 +92,24 @@ const Calculator = () => {
   const [commObj, setCommObj] = useState({
     calsiValue: '',
     total: '',
+    v1: null,
+    v2: null,
   });
+
+  function calsioHandler(value, opr) {
+    if (opr !== 'equal' && opr !== 'back' && opr !== 'clear') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: prev.calsiValue + value,
+      }));
+    }
+    if (opr === 'clear') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: '',
+      }));
+    }
+  }
 
   useEffect(() => {
     console.log('calsiocommObj------>', commObj);
@@ -177,7 +194,7 @@ const Calculator = () => {
                   return (
                     <TouchableWithoutFeedback
                       key={index}
-                      onPress={() => {
+                      onPress={state => {
                         calsioHandler(item.title, item.operation);
                       }}>
                       <View
