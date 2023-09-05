@@ -27,6 +27,12 @@ const HomeScreen = ({navigation}) => {
           navigation.navigate('calsi');
         }}
       />
+      <Button
+        title="Make Notes"
+        onPress={() => {
+          navigation.navigate('notes');
+        }}
+      />
     </View>
   );
 };
