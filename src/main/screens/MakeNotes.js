@@ -7,13 +7,25 @@ import {FlatList} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native';
 import useCreateRequest from '../../customHooks/useCreateRequest';
 import {useEffect} from 'react';
+import {Modal} from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const MakeNotes = () => {
   const {getNotesData} = useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
     data: [],
+    modalVisible: false,
   });
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const items = [
+    {label: 'personal', value: 'personal'},
+    {label: 'study', value: 'study'},
+    {label: 'whishlist', value: 'whishlist'},
+    {label: 'work', value: 'work'},
+  ];
 
   useEffect(() => {
     getNotesData()
@@ -28,6 +40,13 @@ const MakeNotes = () => {
         console.log('err=====>', err);
       });
   }, []);
+
+  const updateNoteHandler = () => {
+    setCommObj(prev => ({
+      ...prev,
+      modalVisible: false,
+    }));
+  };
 
   return (
     <SafeAreaView
@@ -51,7 +70,7 @@ const MakeNotes = () => {
               lineHeight: 29,
               color: '#000000',
             }}>
-            MakeNotes
+            Make Notes
           </Text>
         </View>
         <View
@@ -66,7 +85,13 @@ const MakeNotes = () => {
               bottom: 30,
               right: 20,
             }}>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                setCommObj(prev => ({
+                  ...prev,
+                  modalVisible: !prev.modalVisible,
+                }));
+              }}>
               <View
                 style={{
                   backgroundColor: '#237be8',
@@ -187,6 +212,140 @@ const MakeNotes = () => {
             </View>
           )}
         </View>
+        <Modal
+          visible={commObj.modalVisible}
+          animationType="fade"
+          transparent={true}
+          style={{
+            backgroundColor: 'red',
+          }}
+          onRequestClose={() => {
+            setCommObj(prev => ({
+              ...prev,
+              modalVisible: !prev.modalVisible,
+            }));
+          }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setCommObj(prev => ({
+                ...prev,
+                modalVisible: !prev.modalVisible,
+              }));
+            }}>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                justifyContent: 'center',
+                padding: 20,
+              }}>
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setCommObj(prev => ({
+                    ...prev,
+                    modalVisible: true,
+                  }));
+                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: '#fff',
+                    paddingVertical: 20,
+                    borderRadius: 10,
+                  }}>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        color: '#000',
+                      }}>
+                      Add Note
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      borderBottomWidth: 1,
+                      borderBottomColor: 'lightgray',
+                      paddingTop: 20,
+                    }}></View>
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      gap: 20,
+                      paddingTop: 30,
+                      paddingHorizontal: 20,
+                    }}>
+                    <View>
+                      <TextInput
+                        style={{
+                          paddingLeft: 12,
+                        }}
+                        placeholder="Add Title...."
+                      />
+                    </View>
+                    <View>
+                      <TextInput
+                        style={{
+                          paddingLeft: 12,
+                        }}
+                        placeholder="Add Discription...."
+                      />
+                    </View>
+                    <View>
+                      <DropDownPicker
+                        style={{
+                          borderColor: 'lightgray',
+                        }}
+                        textStyle={{
+                          fontSize: 16,
+                          textTransform: 'capitalize',
+                        }}
+                        open={isOpen}
+                        value={selectedValue}
+                        items={items}
+                        setOpen={setIsOpen}
+                        setValue={setSelectedValue}
+                        setItems={items}
+                        placeholder="Select an item"
+                      />
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      paddingTop: 30,
+                      paddingHorizontal: 20,
+                    }}>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        updateNoteHandler();
+                      }}>
+                      <View
+                        style={{
+                          backgroundColor: '#1973e3',
+                          alignItems: 'center',
+                          paddingVertical: 13,
+                          borderRadius: 8,
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: '#fff',
+                            fontWeight: 'bold',
+                          }}>
+                          Submit
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     </SafeAreaView>
   );
