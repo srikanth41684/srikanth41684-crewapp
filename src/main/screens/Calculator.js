@@ -121,6 +121,18 @@ const Calculator = () => {
         total: '',
       }));
     }
+    if (opr === 'back') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: prev.calsiValue.slice(0, -1),
+      }));
+      if (commObj.firstValue !== '' && commObj.sign !== '') {
+        setCommObj(prev => ({
+          ...prev,
+          secondValue: prev.secondValue.slice(0, -1),
+        }));
+      }
+    }
     if (opr === 'equal') {
       setCommObj(prev => ({
         ...prev,
