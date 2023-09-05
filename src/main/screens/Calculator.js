@@ -92,13 +92,25 @@ const Calculator = () => {
   const [commObj, setCommObj] = useState({
     calsiValue: '',
     total: '',
+    firstValue: '',
+    sign: '',
+    secondValue: '',
+    n1: '',
+    n2: '',
   });
 
   function calsioHandler(value, opr) {
-    if (opr !== 'equal' && opr !== 'back' && opr !== 'clear') {
+    if (commObj.sign === '' && (opr === 'number' || opr === 'dot')) {
       setCommObj(prev => ({
         ...prev,
-        calsiValue: prev.calsiValue + value,
+        firstValue: prev.firstValue + value,
+      }));
+    }
+
+    if (commObj.sign !== '' && (opr === 'number' || opr === 'dot')) {
+      setCommObj(prev => ({
+        ...prev,
+        secondValue: prev.secondValue + value,
       }));
     }
     if (opr === 'clear') {
@@ -108,12 +120,65 @@ const Calculator = () => {
       }));
     }
     if (opr === 'equal') {
+      calculationHandler();
+    }
+    if (
+      opr === 'add' ||
+      opr === 'sub' ||
+      opr === 'multi' ||
+      opr === 'divide' ||
+      opr === 'modulus'
+    ) {
       setCommObj(prev => ({
         ...prev,
-        calsiValue: commObj.total,
+        sign: opr,
       }));
     }
   }
+
+  const calculationHandler = () => {
+    let n1 = Number(commObj.firstValue);
+    let n2 = Number(commObj.secondValue);
+    let s = commObj.sign;
+    console.log('total===>', n1, n2, s);
+    switch (s) {
+      case 'add':
+        console.log('add');
+        setCommObj(prev => ({
+          ...prev,
+          total: n1 + n2,
+        }));
+        break;
+      case 'sub':
+        console.log('sub');
+        setCommObj(prev => ({
+          ...prev,
+          total: n1 - n2,
+        }));
+        break;
+      case 'multi':
+        console.log('multi');
+        setCommObj(prev => ({
+          ...prev,
+          total: n1 * n2,
+        }));
+        break;
+      case 'divide':
+        console.log('divide');
+        setCommObj(prev => ({
+          ...prev,
+          total: n1 / n2,
+        }));
+        break;
+      case 'modulus':
+        console.log('modulus');
+        setCommObj(prev => ({
+          ...prev,
+          total: n1 % n2,
+        }));
+        break;
+    }
+  };
 
   useEffect(() => {
     console.log('calsiocommObj------>', commObj);
