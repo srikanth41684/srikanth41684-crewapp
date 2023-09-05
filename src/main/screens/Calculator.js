@@ -117,6 +117,10 @@ const Calculator = () => {
       setCommObj(prev => ({
         ...prev,
         calsiValue: '',
+        firstValue: '',
+        sign: '',
+        secondValue: '',
+        total: '',
       }));
     }
     if (opr === 'equal') {
@@ -133,50 +137,74 @@ const Calculator = () => {
         ...prev,
         sign: opr,
       }));
+      updateHandler();
+    }
+
+    if (opr !== 'clear' && opr !== 'back' && opr !== 'equal') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: prev.calsiValue + value,
+      }));
     }
   }
+
+  useEffect(() => {
+    calculationHandler();
+  }, [commObj.secondValue]);
 
   const calculationHandler = () => {
     let n1 = Number(commObj.firstValue);
     let n2 = Number(commObj.secondValue);
     let s = commObj.sign;
     console.log('total===>', n1, n2, s);
-    switch (s) {
-      case 'add':
-        console.log('add');
-        setCommObj(prev => ({
-          ...prev,
-          total: n1 + n2,
-        }));
-        break;
-      case 'sub':
-        console.log('sub');
-        setCommObj(prev => ({
-          ...prev,
-          total: n1 - n2,
-        }));
-        break;
-      case 'multi':
-        console.log('multi');
-        setCommObj(prev => ({
-          ...prev,
-          total: n1 * n2,
-        }));
-        break;
-      case 'divide':
-        console.log('divide');
-        setCommObj(prev => ({
-          ...prev,
-          total: n1 / n2,
-        }));
-        break;
-      case 'modulus':
-        console.log('modulus');
-        setCommObj(prev => ({
-          ...prev,
-          total: n1 % n2,
-        }));
-        break;
+    if (commObj.secondValue !== '') {
+      switch (s) {
+        case 'add':
+          console.log('add');
+          setCommObj(prev => ({
+            ...prev,
+            total: n1 + n2,
+          }));
+          break;
+        case 'sub':
+          console.log('sub');
+          setCommObj(prev => ({
+            ...prev,
+            total: n1 - n2,
+          }));
+          break;
+        case 'multi':
+          console.log('multi');
+          setCommObj(prev => ({
+            ...prev,
+            total: n1 * n2,
+          }));
+          break;
+        case 'divide':
+          console.log('divide');
+          setCommObj(prev => ({
+            ...prev,
+            total: n1 / n2,
+          }));
+          break;
+        case 'modulus':
+          console.log('modulus');
+          setCommObj(prev => ({
+            ...prev,
+            total: n1 % n2,
+          }));
+          break;
+      }
+    }
+  };
+
+  const updateHandler = () => {
+    if (commObj.secondValue !== '') {
+      setCommObj(prev => ({
+        ...prev,
+        firstValue: commObj.total,
+        secondValue: '',
+      }));
     }
   };
 
