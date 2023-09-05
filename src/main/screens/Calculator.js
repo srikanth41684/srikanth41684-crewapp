@@ -122,7 +122,14 @@ const Calculator = () => {
       }));
     }
     if (opr === 'equal') {
-      calculationHandler();
+      setCommObj(prev => ({
+        ...prev,
+        total: commObj.calsiValue,
+        calsiValue: commObj.total,
+        firstValue: commObj.total,
+        sign: '',
+        secondValue: '',
+      }));
     }
     if (
       opr === 'add' ||
