@@ -262,12 +262,22 @@ const Calculator = () => {
               }}>
               <Text
                 style={{
-                  fontSize: 24,
+                  fontSize: 32,
                   fontWeight: 'bold',
                   color: '#000000',
                 }}>
                 {commObj.calsiValue}
               </Text>
+              {commObj.calsiValue === '' && (
+                <Text
+                  style={{
+                    fontSize: 32,
+                    fontWeight: 'bold',
+                    color: '#000009',
+                  }}>
+                  0
+                </Text>
+              )}
             </View>
           </View>
           <View
