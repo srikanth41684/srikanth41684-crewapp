@@ -92,44 +92,7 @@ const Calculator = () => {
   const [commObj, setCommObj] = useState({
     calsiValue: '',
     total: '',
-    temp: '',
-    operation: '',
   });
-
-  useEffect(() => {}, [commObj.operation]);
-
-  // function calsioHandler(value, sign) {
-  //   console.log(value, sign);
-  //   // if (sign !== 'clear' && sign !== 'back' && sign !== 'equal') {
-  //   //   setCommObj(prev => ({
-  //   //     ...prev,
-  //   //     calsiValue: prev.calsiValue !== '' ? prev.calsiValue + value : value,
-  //   //   }));
-  //   // }
-
-  //   if (sign === 'clear') {
-  //     setCommObj(prev => ({
-  //       ...prev,
-  //       calsiValue: '',
-  //       total: '',
-  //     }));
-  //   }
-
-  //   if (sign === 'number') {
-  //     setCommObj(prev => ({
-  //       ...prev,
-  //       calsiValue: prev.calsiValue !== '' ? prev.calsiValue + value : value,
-  //       operation: '',
-  //     }));
-  //   } else {
-  //     setCommObj(prev => ({
-  //       ...prev,
-  //       total: commObj.calsiValue,
-  //       operation: sign,
-  //       calsiValue: '',
-  //     }));
-  //   }
-  // }
 
   useEffect(() => {
     console.log('calsiocommObj------>', commObj);
