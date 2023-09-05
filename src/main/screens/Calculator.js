@@ -95,8 +95,6 @@ const Calculator = () => {
     firstValue: '',
     sign: '',
     secondValue: '',
-    n1: '',
-    n2: '',
   });
 
   function calsioHandler(value, opr) {
