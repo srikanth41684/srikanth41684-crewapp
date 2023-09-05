@@ -62,6 +62,31 @@ const MakeNotes = () => {
           }}>
           <View
             style={{
+              position: 'absolute',
+              bottom: 30,
+              right: 20,
+            }}>
+            <TouchableWithoutFeedback>
+              <View
+                style={{
+                  backgroundColor: '#237be8',
+                  paddingHorizontal: 10,
+                  paddingVertical: 10,
+                  borderRadius: 8,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: '#fff',
+                  }}>
+                  Add Notes
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          <View
+            style={{
               paddingVertical: 20,
             }}>
             <TextInput
