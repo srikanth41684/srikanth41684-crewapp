@@ -92,8 +92,6 @@ const Calculator = () => {
   const [commObj, setCommObj] = useState({
     calsiValue: '',
     total: '',
-    v1: null,
-    v2: null,
   });
 
   function calsioHandler(value, opr) {
@@ -107,6 +105,12 @@ const Calculator = () => {
       setCommObj(prev => ({
         ...prev,
         calsiValue: '',
+      }));
+    }
+    if (opr === 'equal') {
+      setCommObj(prev => ({
+        ...prev,
+        calsiValue: commObj.total,
       }));
     }
   }
