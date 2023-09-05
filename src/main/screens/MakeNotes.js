@@ -8,6 +8,7 @@ import {TouchableWithoutFeedback} from 'react-native';
 import useCreateRequest from '../../customHooks/useCreateRequest';
 import {useEffect} from 'react';
 import {Modal} from 'react-native';
+import uuid from 'react-native-uuid';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const MakeNotes = () => {
@@ -16,6 +17,8 @@ const MakeNotes = () => {
     searchQuery: '',
     data: [],
     modalVisible: false,
+    noteTitle: '',
+    noteDescription: '',
   });
   const [selectedValue, setSelectedValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +44,14 @@ const MakeNotes = () => {
       });
   }, []);
 
-  const updateNoteHandler = () => {
+  const updateNoteHandler = (title, description, category) => {
+    let obj = {
+      id: uuid.DNS,
+      title: title,
+      description: description,
+      category: category,
+    };
+    console.log('updateNoteHandler----->', obj);
     setCommObj(prev => ({
       ...prev,
       modalVisible: false,
@@ -285,6 +295,13 @@ const MakeNotes = () => {
                           paddingLeft: 12,
                         }}
                         placeholder="Add Title...."
+                        value={commObj.noteTitle}
+                        onChangeText={text => {
+                          setCommObj(prev => ({
+                            ...prev,
+                            noteTitle: text,
+                          }));
+                        }}
                       />
                     </View>
                     <View>
@@ -293,6 +310,13 @@ const MakeNotes = () => {
                           paddingLeft: 12,
                         }}
                         placeholder="Add Discription...."
+                        value={commObj.noteDescription}
+                        onChangeText={text => {
+                          setCommObj(prev => ({
+                            ...prev,
+                            noteDescription: text,
+                          }));
+                        }}
                       />
                     </View>
                     <View>
@@ -321,7 +345,11 @@ const MakeNotes = () => {
                     }}>
                     <TouchableWithoutFeedback
                       onPress={() => {
-                        updateNoteHandler();
+                        updateNoteHandler(
+                          commObj.noteTitle,
+                          commObj.noteDescription,
+                          selectedValue,
+                        );
                       }}>
                       <View
                         style={{
