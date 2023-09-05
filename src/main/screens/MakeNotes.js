@@ -1,8 +1,13 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
+import {TextInput} from 'react-native';
+import {useState} from 'react';
 
 const MakeNotes = () => {
+  const [commObj, setCommObj] = useState({
+    searchQuery: '',
+  });
   return (
     <SafeAreaView
       style={{
@@ -33,7 +38,31 @@ const MakeNotes = () => {
             flex: 1,
             backgroundColor: '#f5fafc',
             paddingHorizontal: 20,
-          }}></View>
+          }}>
+          <View
+            style={{
+              paddingVertical: 20,
+            }}>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                backgroundColor: '#ffffff',
+                height: 40,
+                borderRadius: 12,
+                paddingLeft: 12,
+                borderColor: 'lightgray',
+              }}
+              placeholder="Search"
+              value={commObj.searchQuery}
+              onChangeText={text => {
+                setCommObj(prev => ({
+                  ...prev,
+                  searchQuery: text,
+                }));
+              }}
+            />
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
