@@ -1,10 +1,16 @@
 {
   "notes": [
     {
-      "title": "sadadad",
-      "description": "asdsa afsdf rfrfsd fvrgrfds cgfgregfwr fdsfdsfsdf",
-      "category": "whishlist",
+      "title": "React Native Alert",
+      "description": "React Native Alert is an API which is used to display an alert dialog with specified title and message. It uses an alert() method to prompt an alert dialog. In this chapter, we will understand how to create custom Alert component. Step 1: App.js. import React from 'react' import Ale",
+      "category": "study",
       "id": 1
+    },
+    {
+      "title": "Drawer Navigator",
+      "description": "Drawer Navigator renders a navigation drawer on the side of the screen which can be opened and closed via gestures.\n\n",
+      "category": "study",
+      "id": 2
     }
   ]
 }

@@ -8,7 +8,6 @@ import {TouchableWithoutFeedback} from 'react-native';
 import useCreateRequest from '../../customHooks/useCreateRequest';
 import {useEffect} from 'react';
 import {Modal} from 'react-native';
-import uuid from 'react-native-uuid';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 
@@ -32,6 +31,10 @@ const MakeNotes = () => {
   ];
 
   useEffect(() => {
+    getNotesHandler();
+  }, []);
+
+  const getNotesHandler = () => {
     getNotesData()
       .then(res => {
         console.log('res=====>', res);
@@ -43,7 +46,7 @@ const MakeNotes = () => {
       .catch(err => {
         console.log('err=====>', err);
       });
-  }, []);
+  };
 
   const updateNoteHandler = (title, description, category) => {
     let obj = {
@@ -56,6 +59,9 @@ const MakeNotes = () => {
     postNotesData(obj)
       .then(res => {
         console.log(res);
+        if (res) {
+          getNotesHandler();
+        }
       })
       .catch(err => {
         console.log(err);
@@ -66,6 +72,7 @@ const MakeNotes = () => {
       noteTitle: '',
       noteDescription: '',
     }));
+    setSelectedValue(null);
   };
 
   const longpressHandler = item => {
@@ -79,6 +86,9 @@ const MakeNotes = () => {
             deleteNotes(item.id)
               .then(res => {
                 console.log(res);
+                if (res) {
+                  getNotesHandler();
+                }
               })
               .catch(err => {
                 console.log(err);
@@ -282,14 +292,20 @@ const MakeNotes = () => {
             setCommObj(prev => ({
               ...prev,
               modalVisible: !prev.modalVisible,
+              noteTitle: '',
+              noteDescription: '',
             }));
+            setSelectedValue(null);
           }}>
           <TouchableWithoutFeedback
             onPress={() => {
               setCommObj(prev => ({
                 ...prev,
                 modalVisible: !prev.modalVisible,
+                noteTitle: '',
+                noteDescription: '',
               }));
+              setSelectedValue(null);
             }}>
             <View
               style={{
@@ -394,15 +410,26 @@ const MakeNotes = () => {
                     }}>
                     <TouchableWithoutFeedback
                       onPress={() => {
-                        updateNoteHandler(
-                          commObj.noteTitle,
-                          commObj.noteDescription,
-                          selectedValue,
-                        );
+                        if (
+                          commObj.noteTitle !== '' &&
+                          commObj.noteDescription !== '' &&
+                          selectedValue !== null
+                        ) {
+                          updateNoteHandler(
+                            commObj.noteTitle,
+                            commObj.noteDescription,
+                            selectedValue,
+                          );
+                        }
                       }}>
                       <View
                         style={{
-                          backgroundColor: '#1973e3',
+                          backgroundColor:
+                            commObj.noteTitle !== '' &&
+                            commObj.noteDescription !== '' &&
+                            selectedValue !== null
+                              ? '#1973e3'
+                              : 'lightblue',
                           alignItems: 'center',
                           paddingVertical: 13,
                           borderRadius: 8,
