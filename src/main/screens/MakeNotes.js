@@ -19,6 +19,7 @@ const MakeNotes = ({navigation}) => {
     modalVisible: false,
     noteTitle: '',
     noteDescription: '',
+    bgColors: ['#293a4f', '#91162f', 'blue', 'green', '#bb19e3'],
   });
   const [selectedValue, setSelectedValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -250,7 +251,10 @@ const MakeNotes = ({navigation}) => {
                     <View
                       style={{
                         width: '48%',
-                        backgroundColor: '#293a4f',
+                        backgroundColor:
+                          commObj.bgColors[
+                            Math.floor(Math.random() * commObj.bgColors.length)
+                          ],
                         borderRadius: 8,
                         paddingHorizontal: 8,
                         paddingVertical: 5,
