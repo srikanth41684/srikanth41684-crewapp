@@ -157,7 +157,10 @@ const MakeNotes = () => {
               numColumns={2}
               renderItem={({item}) => {
                 return (
-                  <TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback
+                    onLongPress={() => {
+                      console.log('longPress');
+                    }}>
                     <View
                       style={{
                         width: '48%',
