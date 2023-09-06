@@ -10,6 +10,7 @@ import {useEffect} from 'react';
 import {Modal} from 'react-native';
 import uuid from 'react-native-uuid';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {Alert} from 'react-native';
 
 const MakeNotes = () => {
   const {getNotesData, postNotesData, deleteNotes} = useCreateRequest();
@@ -67,19 +68,34 @@ const MakeNotes = () => {
     }));
   };
 
-  // useEffect(() => {
-  //   getNotesData()
-  //     .then(res => {
-  //       console.log('res=====>', res);
-  //       setCommObj(prev => ({
-  //         ...prev,
-  //         data: res?.data,
-  //       }));
-  //     })
-  //     .catch(err => {
-  //       console.log('err=====>', err);
-  //     });
-  // }, []);
+  const longpressHandler = item => {
+    Alert.alert(
+      'Delete!',
+      'Do you want to delete this note',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteNotes(item.id)
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          },
+        },
+        {
+          text: 'No',
+          onPress: () => console.log('No button clicked'),
+          style: 'cancel',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
 
   useEffect(() => {
     console.log('commObj------>', commObj);
@@ -189,7 +205,7 @@ const MakeNotes = () => {
                 return (
                   <TouchableWithoutFeedback
                     onLongPress={() => {
-                      console.log('longPress');
+                      longpressHandler(item);
                     }}>
                     <View
                       style={{

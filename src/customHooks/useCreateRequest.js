@@ -36,10 +36,10 @@ const useCreateRequest = () => {
     return createPostRequest('notes', data);
   };
 
-  const createDeleteRequest = async (params, id) => {
+  const createDeleteRequest = async params => {
     let requestUrl = baseUrl + params;
     return axios
-      .delete(requestUrl, id)
+      .delete(requestUrl)
       .then(res => {
         return res;
       })
@@ -49,7 +49,7 @@ const useCreateRequest = () => {
   };
 
   const deleteNotes = id => {
-    return createDeleteRequest('notes', id);
+    return createDeleteRequest(`notes/${id}`);
   };
 
   return {
