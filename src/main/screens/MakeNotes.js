@@ -35,6 +35,24 @@ const MakeNotes = ({navigation}) => {
     getNotesHandler();
   }, []);
 
+  // useEffect(() => {
+  //   if (commObj.searchQuery !== '') {
+  //     let data = [];
+  //     commObj.data.filter(item => {
+  //       if (
+  //         item.title.toUpperCase().includes(commObj.searchQuery.toUpperCase())
+  //       ) {
+  //         data.push(item);
+  //       }
+  //     });
+  //     console.log('data----->', data);
+  //     setCommObj(prev => ({
+  //       ...prev,
+  //       data: data,
+  //     }));
+  //   }
+  // }, [commObj.searchQuery]);
+
   const getNotesHandler = () => {
     getNotesData()
       .then(res => {
@@ -108,9 +126,9 @@ const MakeNotes = ({navigation}) => {
     );
   };
 
-  useEffect(() => {
-    console.log('commObj------>', commObj);
-  }, [commObj]);
+  // useEffect(() => {
+  //   console.log('commObj------>', commObj);
+  // }, [commObj]);
 
   return (
     <SafeAreaView
@@ -152,14 +170,14 @@ const MakeNotes = ({navigation}) => {
             }}>
             <TouchableWithoutFeedback
               onPress={() => {
-                navigation.navigate('MakeNotesNav', {
-                  screen: 'addnotes',
-                })
-                // console.log('Yes');
-                // setCommObj(prev => ({
-                //   ...prev,
-                //   modalVisible: !prev.modalVisible,
-                // }));
+                // navigation.navigate('MakeNotesNav', {
+                //   screen: 'addnotes',
+                // })
+                console.log('Yes');
+                setCommObj(prev => ({
+                  ...prev,
+                  modalVisible: !prev.modalVisible,
+                }));
               }}>
               <View
                 style={{
