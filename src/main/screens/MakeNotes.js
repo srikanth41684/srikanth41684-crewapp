@@ -154,7 +154,12 @@ const MakeNotes = ({navigation}) => {
               onPress={() => {
                 navigation.navigate('MakeNotesNav', {
                   screen: 'addnotes',
-                });
+                })
+                // console.log('Yes');
+                // setCommObj(prev => ({
+                //   ...prev,
+                //   modalVisible: !prev.modalVisible,
+                // }));
               }}>
               <View
                 style={{
