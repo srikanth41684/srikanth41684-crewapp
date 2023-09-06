@@ -21,8 +21,14 @@ const items = [
   {label: 'other', value: 'other'},
 ];
 const MakeNotes = ({navigation}) => {
-  const {getNotesData, postNotesData, deleteNotes, searchNotes, updateNote} =
-    useCreateRequest();
+  const {
+    getNotesData,
+    postNotesData,
+    deleteNotes,
+    searchNotes,
+    updateNote,
+    categoryNotes,
+  } = useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
     data: [],
@@ -33,6 +39,7 @@ const MakeNotes = ({navigation}) => {
     noteId: null,
   });
   const [selectedValue, setSelectedValue] = useState(null);
+  const [searchSelectedValue, setSearchSelectedValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -154,6 +161,23 @@ const MakeNotes = ({navigation}) => {
   };
 
   useEffect(() => {
+    categoryFilterHandler();
+  }, [searchSelectedValue]);
+
+  const categoryFilterHandler = () => {
+    console.log('searchSelectedValue----->', searchSelectedValue);
+    if (searchSelectedValue !== null) {
+      categoryNotes(searchSelectedValue)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
     console.log('commObj------>', commObj);
   }, [commObj]);
 
@@ -227,6 +251,22 @@ const MakeNotes = ({navigation}) => {
             style={{
               paddingVertical: 20,
             }}>
+            <DropDownPicker
+              style={{
+                borderColor: 'lightgray',
+              }}
+              textStyle={{
+                fontSize: 16,
+                textTransform: 'capitalize',
+              }}
+              open={isOpen}
+              value={searchSelectedValue}
+              items={items}
+              setOpen={setIsOpen}
+              setValue={setSearchSelectedValue}
+              setItems={items}
+              placeholder="Select an item"
+            />
             <TextInput
               style={{
                 borderWidth: 1,

@@ -24,6 +24,10 @@ const useCreateRequest = () => {
     return createGetRequst(`notes?q=${query}`);
   };
 
+  const categoryNotes = cat => {
+    return createGetRequst(`notes?category=:${cat}`);
+  };
+
   const createPostRequest = async (params, data) => {
     let requestUrl = baseUrl + params;
     return axios
@@ -76,6 +80,7 @@ const useCreateRequest = () => {
     createGetRequst,
     getNotesData,
     searchNotes,
+    categoryNotes,
 
     createPostRequest,
     postNotesData,
