@@ -10,6 +10,7 @@ import {useEffect} from 'react';
 import {Modal} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
 const items = [
@@ -257,74 +258,80 @@ const MakeNotes = ({navigation}) => {
               }}
               renderItem={({item}) => {
                 return (
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      // let obj = {
-                      //   id: 1,
-                      //   title: 'react',
-                      //   description: 'Nothing',
-                      //   category: 'personal',
-                      // };
-                      // updateNote(item.id, obj)
-                      //   .then(res => {
-                      //     console.log('update res----->', res);
-                      //   })
-                      //   .catch(err => {
-                      //     console.log(err);
-                      //   });
-                      // navigation.navigate('MakeNotesNav', {
-                      //   screen: 'notesDetails',
-                      //   params: {
-                      //     note: item,
-                      //   },
-                      // });
-                      noteUpdateHandler(item);
-                    }}
-                    onLongPress={() => {
-                      longpressHandler(item);
-                    }}>
+                  <View>
                     <View
                       style={{
-                        backgroundColor: '#293a4f',
-                        //   bgColors[Math.floor(Math.random() * bgColors.length)],
-                        borderRadius: 8,
-                        paddingHorizontal: 8,
-                        paddingVertical: 5,
+                        position: 'absolute',
+                        right: 10,
+                        top: 10,
+                        zIndex: 2,
                       }}>
-                      <Text
-                        style={{
-                          color: '#ffffff',
-                          fontSize: 22,
-                          fontWeight: 'bold',
+                      <TouchableWithoutFeedback
+                        onPress={() => {
+                          longpressHandler(item);
                         }}>
-                        {item.title}
-                      </Text>
-                      <Text
-                        style={{
-                          color: '#ffffff',
-                          fontSize: 14,
-                          fontWeight: 'normal',
-                          textTransform: 'capitalize',
-                        }}>
-                        {item.category}
-                      </Text>
+                        <View>
+                          <Icon name="delete" size={25} color="white" />
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        // navigation.navigate('MakeNotesNav', {
+                        //   screen: 'notesDetails',
+                        //   params: {
+                        //     note: item,
+                        //   },
+                        // });
+
+                        noteUpdateHandler(item);
+                      }}
+                      onLongPress={() => {
+                        // longpressHandler(item);
+                      }}>
                       <View
                         style={{
-                          paddingTop: 10,
+                          backgroundColor: '#293a4f',
+                          //   bgColors[Math.floor(Math.random() * bgColors.length)],
+                          borderRadius: 8,
+                          paddingHorizontal: 8,
+                          paddingVertical: 5,
                         }}>
                         <Text
-                          numberOfLines={3}
-                          ellipsizeMode="tail"
                           style={{
                             color: '#ffffff',
-                            fontSize: 16,
-                            fontWeight: 'normal',
+                            fontSize: 22,
+                            fontWeight: 'bold',
                           }}>
-                          {item.description}
+                          {item.title}
                         </Text>
+                        <Text
+                          style={{
+                            color: '#ffffff',
+                            fontSize: 14,
+                            fontWeight: 'normal',
+                            textTransform: 'capitalize',
+                          }}>
+                          {item.category}
+                        </Text>
+                        <View
+                          style={{
+                            paddingTop: 10,
+                          }}>
+                          <Text
+                            numberOfLines={3}
+                            ellipsizeMode="tail"
+                            style={{
+                              color: '#ffffff',
+                              fontSize: 16,
+                              fontWeight: 'normal',
+                            }}>
+                            {item.description}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+                  </View>
                 );
               }}
               keyExtractor={item => item.id}

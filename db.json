@@ -1,12 +1,6 @@
 {
   "notes": [
     {
-      "id": 1,
-      "title": "react",
-      "description": "Nothing red",
-      "category": "personal"
-    },
-    {
       "title": "Drawer Navigator",
       "description": "Drawer Navigator renders a navigation drawer on the side of the screen which can be opened and closed via gestures.\n\n",
       "category": "study",
