@@ -12,7 +12,7 @@ import uuid from 'react-native-uuid';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const MakeNotes = () => {
-  const {getNotesData, postNotesData} = useCreateRequest();
+  const {getNotesData, postNotesData, deleteNotes} = useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
     data: [],
@@ -67,6 +67,20 @@ const MakeNotes = () => {
     }));
   };
 
+  // useEffect(() => {
+  //   getNotesData()
+  //     .then(res => {
+  //       console.log('res=====>', res);
+  //       setCommObj(prev => ({
+  //         ...prev,
+  //         data: res?.data,
+  //       }));
+  //     })
+  //     .catch(err => {
+  //       console.log('err=====>', err);
+  //     });
+  // }, []);
+
   useEffect(() => {
     console.log('commObj------>', commObj);
   }, [commObj]);
@@ -107,6 +121,7 @@ const MakeNotes = () => {
               position: 'absolute',
               bottom: 30,
               right: 20,
+              zIndex: 5,
             }}>
             <TouchableWithoutFeedback
               onPress={() => {
@@ -160,6 +175,7 @@ const MakeNotes = () => {
           {commObj.data.length > 0 ? (
             <FlatList
               data={commObj.data}
+              showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 flexGrow: 1,
                 flexDirection: 'column',
