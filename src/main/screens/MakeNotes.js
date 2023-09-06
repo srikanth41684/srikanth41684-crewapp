@@ -12,7 +12,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
+const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
 const items = [
   {label: 'personal', value: 'personal'},
   {label: 'study', value: 'study'},
@@ -291,8 +291,11 @@ const MakeNotes = ({navigation}) => {
                       }}>
                       <View
                         style={{
-                          backgroundColor: '#293a4f',
-                          //   bgColors[Math.floor(Math.random() * bgColors.length)],
+                          // backgroundColor: '#293a4f',
+                          backgroundColor:
+                            bgColors[
+                              Math.floor(Math.random() * bgColors.length)
+                            ],
                           borderRadius: 8,
                           paddingHorizontal: 8,
                           paddingVertical: 5,
