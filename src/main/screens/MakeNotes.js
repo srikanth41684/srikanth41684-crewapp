@@ -358,9 +358,6 @@ const MakeNotes = ({navigation}) => {
           visible={commObj.modalVisible}
           animationType="fade"
           transparent={true}
-          style={{
-            backgroundColor: 'red',
-          }}
           onRequestClose={() => {
             setCommObj(prev => ({
               ...prev,
@@ -431,7 +428,15 @@ const MakeNotes = ({navigation}) => {
                       <TextInput
                         style={{
                           paddingLeft: 12,
+                          borderColor: 'lightgray',
+                          borderWidth: 0.5,
+                          textAlignVertical: 'top',
+                          paddingTop: 10,
+                          fontSize: 20,
+                          borderRadius: 8,
                         }}
+                        multiline={true}
+                        numberOfLines={2}
                         placeholder="Add Title...."
                         value={commObj.noteTitle}
                         onChangeText={text => {
@@ -446,7 +451,15 @@ const MakeNotes = ({navigation}) => {
                       <TextInput
                         style={{
                           paddingLeft: 12,
+                          borderColor: 'lightgray',
+                          borderWidth: 0.5,
+                          textAlignVertical: 'top',
+                          paddingTop: 20,
+                          fontSize: 16,
+                          borderRadius: 8,
                         }}
+                        multiline={true}
+                        numberOfLines={7}
                         placeholder="Add Description...."
                         value={commObj.noteDescription}
                         onChangeText={text => {
