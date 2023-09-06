@@ -12,7 +12,7 @@ import uuid from 'react-native-uuid';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const MakeNotes = () => {
-  const {getNotesData} = useCreateRequest();
+  const {getNotesData, postNotesData} = useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
     data: [],
@@ -46,17 +46,30 @@ const MakeNotes = () => {
 
   const updateNoteHandler = (title, description, category) => {
     let obj = {
-      id: uuid.DNS,
       title: title,
       description: description,
       category: category,
     };
     console.log('updateNoteHandler----->', obj);
+
+    postNotesData(obj)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
     setCommObj(prev => ({
       ...prev,
       modalVisible: false,
+      noteTitle: '',
+      noteDescription: '',
     }));
   };
+
+  useEffect(() => {
+    console.log('commObj------>', commObj);
+  }, [commObj]);
 
   return (
     <SafeAreaView
@@ -97,6 +110,7 @@ const MakeNotes = () => {
             }}>
             <TouchableWithoutFeedback
               onPress={() => {
+                console.log('Yes');
                 setCommObj(prev => ({
                   ...prev,
                   modalVisible: !prev.modalVisible,
@@ -115,7 +129,7 @@ const MakeNotes = () => {
                     fontWeight: '500',
                     color: '#fff',
                   }}>
-                  Add Notes
+                  Add Notes..
                 </Text>
               </View>
             </TouchableWithoutFeedback>
@@ -198,7 +212,7 @@ const MakeNotes = () => {
                             fontSize: 16,
                             fontWeight: 'normal',
                           }}>
-                          {item.discription}
+                          {item.description}
                         </Text>
                       </View>
                     </View>
@@ -312,7 +326,7 @@ const MakeNotes = () => {
                         style={{
                           paddingLeft: 12,
                         }}
-                        placeholder="Add Discription...."
+                        placeholder="Add Description...."
                         value={commObj.noteDescription}
                         onChangeText={text => {
                           setCommObj(prev => ({
