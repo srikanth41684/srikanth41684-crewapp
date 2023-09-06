@@ -28,6 +28,8 @@ const MakeNotes = ({navigation}) => {
     modalVisible: false,
     noteTitle: '',
     noteDescription: '',
+    noteUpdate: false,
+    noteId: null,
   });
   const [selectedValue, setSelectedValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -45,18 +47,29 @@ const MakeNotes = ({navigation}) => {
           console.log('search err=====>', err);
         });
     } else {
-      getNotesData()
-        .then(res => {
-          setCommObj(prev => ({
-            ...prev,
-            data: res?.data,
-          }));
-        })
-        .catch(err => {
-          console.log('err=====>', err);
-        });
+      getNotesHandler();
     }
   }, [commObj.searchQuery]);
+
+  const getNotesHandler = () => {
+    getNotesData()
+      .then(res => {
+        setCommObj(prev => ({
+          ...prev,
+          data: res?.data,
+        }));
+      })
+      .catch(err => {
+        console.log('err=====>', err);
+      });
+    setCommObj(prev => ({
+      ...prev,
+      modalVisible: false,
+      noteTitle: '',
+      noteDescription: '',
+    }));
+    setSelectedValue(null);
+  };
 
   const updateNoteHandler = (title, description, category) => {
     let obj = {
@@ -74,13 +87,6 @@ const MakeNotes = ({navigation}) => {
       .catch(err => {
         console.log(err);
       });
-    setCommObj(prev => ({
-      ...prev,
-      modalVisible: false,
-      noteTitle: '',
-      noteDescription: '',
-    }));
-    setSelectedValue(null);
   };
 
   const longpressHandler = item => {
@@ -114,7 +120,37 @@ const MakeNotes = ({navigation}) => {
     );
   };
 
-  
+  const noteUpdateHandler = item => {
+    setCommObj(prev => ({
+      ...prev,
+      modalVisible: true,
+      noteTitle: item.title,
+      noteDescription: item.description,
+      noteId: item.id,
+      noteUpdate: true,
+    }));
+    setSelectedValue(item.category);
+  };
+
+  const putUpdateNoteHandler = (id, title, description, category) => {
+    let obj = {
+      id: id,
+      title: title,
+      description: description,
+      category: category,
+    };
+    console.log('obj--------->', id, obj);
+    updateNote(id, obj)
+      .then(res => {
+        console.log('update res----->', res);
+        if (res) {
+          getNotesHandler();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     console.log('commObj------>', commObj);
@@ -223,12 +259,26 @@ const MakeNotes = ({navigation}) => {
                 return (
                   <TouchableWithoutFeedback
                     onPress={() => {
-                      navigation.navigate('MakeNotesNav', {
-                        screen: 'notesDetails',
-                        params: {
-                          note: item,
-                        },
-                      });
+                      // let obj = {
+                      //   id: 1,
+                      //   title: 'react',
+                      //   description: 'Nothing',
+                      //   category: 'personal',
+                      // };
+                      // updateNote(item.id, obj)
+                      //   .then(res => {
+                      //     console.log('update res----->', res);
+                      //   })
+                      //   .catch(err => {
+                      //     console.log(err);
+                      //   });
+                      // navigation.navigate('MakeNotesNav', {
+                      //   screen: 'notesDetails',
+                      //   params: {
+                      //     note: item,
+                      //   },
+                      // });
+                      noteUpdateHandler(item);
                     }}
                     onLongPress={() => {
                       longpressHandler(item);
@@ -431,11 +481,20 @@ const MakeNotes = ({navigation}) => {
                           commObj.noteDescription !== '' &&
                           selectedValue !== null
                         ) {
-                          updateNoteHandler(
-                            commObj.noteTitle,
-                            commObj.noteDescription,
-                            selectedValue,
-                          );
+                          if (commObj.noteUpdate) {
+                            putUpdateNoteHandler(
+                              commObj.noteId,
+                              commObj.noteTitle,
+                              commObj.noteDescription,
+                              selectedValue,
+                            );
+                          } else {
+                            updateNoteHandler(
+                              commObj.noteTitle,
+                              commObj.noteDescription,
+                              selectedValue,
+                            );
+                          }
                         }
                       }}>
                       <View
