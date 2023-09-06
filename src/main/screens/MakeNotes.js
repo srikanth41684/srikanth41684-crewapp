@@ -28,6 +28,7 @@ const MakeNotes = ({navigation}) => {
     {label: 'study', value: 'study'},
     {label: 'whishlist', value: 'whishlist'},
     {label: 'work', value: 'work'},
+    {label: 'other', value: 'other'},
   ];
 
   useEffect(() => {
@@ -151,11 +152,9 @@ const MakeNotes = ({navigation}) => {
             }}>
             <TouchableWithoutFeedback
               onPress={() => {
-                console.log('Yes');
-                setCommObj(prev => ({
-                  ...prev,
-                  modalVisible: !prev.modalVisible,
-                }));
+                navigation.navigate('MakeNotesNav', {
+                  screen: 'addnotes',
+                });
               }}>
               <View
                 style={{
@@ -217,7 +216,9 @@ const MakeNotes = ({navigation}) => {
                     onPress={() => {
                       navigation.navigate('MakeNotesNav', {
                         screen: 'notesDetails',
-                        data: item,
+                        params: {
+                          note: item,
+                        },
                       });
                     }}
                     onLongPress={() => {

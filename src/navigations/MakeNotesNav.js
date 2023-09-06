@@ -3,6 +3,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MakeNotes from '../main/screens/MakeNotes';
 import NotesDetailsScreen from '../main/screens/NotesDetailsScreen';
+import AddNoteScreen from '../main/screens/AddNoteScreen';
 
 const makeNotesStack = createNativeStackNavigator();
 
@@ -17,6 +18,11 @@ const MakeNotesNav = () => {
       <makeNotesStack.Screen
         name="notesDetails"
         component={NotesDetailsScreen}
+        options={{headerShown: false}}
+      />
+      <makeNotesStack.Screen
+        name="addnotes"
+        component={AddNoteScreen}
         options={{headerShown: false}}
       />
     </makeNotesStack.Navigator>
