@@ -11,7 +11,7 @@ import {Modal} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 
-const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
+// const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
 const MakeNotes = ({navigation}) => {
   const {getNotesData, postNotesData, deleteNotes, searchNotes} =
     useCreateRequest();
@@ -37,7 +37,6 @@ const MakeNotes = ({navigation}) => {
     if (commObj.searchQuery !== '') {
       searchNotes(commObj.searchQuery)
         .then(res => {
-          console.log('search--->', res);
           setCommObj(prev => ({
             ...prev,
             data: res?.data,
@@ -49,7 +48,6 @@ const MakeNotes = ({navigation}) => {
     } else {
       getNotesData()
         .then(res => {
-          console.log('res=====>', res);
           setCommObj(prev => ({
             ...prev,
             data: res?.data,
@@ -67,11 +65,9 @@ const MakeNotes = ({navigation}) => {
       description: description,
       category: category,
     };
-    console.log('updateNoteHandler----->', obj);
 
     postNotesData(obj)
       .then(res => {
-        console.log(res);
         if (res) {
           getNotesHandler();
         }
@@ -98,7 +94,6 @@ const MakeNotes = ({navigation}) => {
           onPress: () => {
             deleteNotes(item.id)
               .then(res => {
-                console.log(res);
                 if (res) {
                   getNotesHandler();
                 }
@@ -120,9 +115,9 @@ const MakeNotes = ({navigation}) => {
     );
   };
 
-  // useEffect(() => {
-  //   console.log('commObj------>', commObj);
-  // }, [commObj]);
+  useEffect(() => {
+    console.log('commObj------>', commObj);
+  }, [commObj]);
 
   return (
     <SafeAreaView
@@ -167,7 +162,6 @@ const MakeNotes = ({navigation}) => {
                 // navigation.navigate('MakeNotesNav', {
                 //   screen: 'addnotes',
                 // })
-                console.log('Yes');
                 setCommObj(prev => ({
                   ...prev,
                   modalVisible: !prev.modalVisible,
@@ -240,8 +234,8 @@ const MakeNotes = ({navigation}) => {
                     }}>
                     <View
                       style={{
-                        backgroundColor:
-                          bgColors[Math.floor(Math.random() * bgColors.length)],
+                        backgroundColor: '#293a4f',
+                        //   bgColors[Math.floor(Math.random() * bgColors.length)],
                         borderRadius: 8,
                         paddingHorizontal: 8,
                         paddingVertical: 5,
