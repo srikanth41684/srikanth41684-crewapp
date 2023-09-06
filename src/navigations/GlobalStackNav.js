@@ -7,6 +7,7 @@ import {AppContext} from '../context/AppContext';
 import HomeScreen from '../main/screens/HomeScreen';
 import Calculator from '../main/screens/Calculator';
 import MakeNotes from '../main/screens/MakeNotes';
+import MakeNotesNav from './MakeNotesNav';
 
 const MainStack = createNativeStackNavigator();
 
@@ -27,8 +28,8 @@ const GlobalStackNav = () => {
             options={{headerShown: false}}
           />
           <MainStack.Screen
-            name="notes"
-            component={MakeNotes}
+            name="MakeNotesNav"
+            component={MakeNotesNav}
             options={{headerShown: false}}
           />
         </>

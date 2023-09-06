@@ -11,7 +11,7 @@ import {Modal} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 
-const MakeNotes = () => {
+const MakeNotes = ({navigation}) => {
   const {getNotesData, postNotesData, deleteNotes} = useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
@@ -214,6 +214,12 @@ const MakeNotes = () => {
               renderItem={({item}) => {
                 return (
                   <TouchableWithoutFeedback
+                    onPress={() => {
+                      navigation.navigate('MakeNotesNav', {
+                        screen: 'notesDetails',
+                        data: item,
+                      });
+                    }}
                     onLongPress={() => {
                       longpressHandler(item);
                     }}>
