@@ -20,6 +20,10 @@ const useCreateRequest = () => {
     return createGetRequst('notes');
   };
 
+  const searchNotes = query => {
+    return createGetRequst(`notes?q=${query}`);
+  };
+
   const createPostRequest = async (params, data) => {
     let requestUrl = baseUrl + params;
     return axios
@@ -55,6 +59,7 @@ const useCreateRequest = () => {
   return {
     createGetRequst,
     getNotesData,
+    searchNotes,
 
     createPostRequest,
     postNotesData,

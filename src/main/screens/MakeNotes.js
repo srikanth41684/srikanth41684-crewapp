@@ -11,15 +11,16 @@ import {Modal} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 
+const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
 const MakeNotes = ({navigation}) => {
-  const {getNotesData, postNotesData, deleteNotes} = useCreateRequest();
+  const {getNotesData, postNotesData, deleteNotes, searchNotes} =
+    useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
     data: [],
     modalVisible: false,
     noteTitle: '',
     noteDescription: '',
-    bgColors: ['#293a4f', '#91162f', 'blue', 'green', '#bb19e3'],
   });
   const [selectedValue, setSelectedValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -33,40 +34,32 @@ const MakeNotes = ({navigation}) => {
   ];
 
   useEffect(() => {
-    getNotesHandler();
-  }, []);
-
-  // useEffect(() => {
-  //   if (commObj.searchQuery !== '') {
-  //     let data = [];
-  //     commObj.data.filter(item => {
-  //       if (
-  //         item.title.toUpperCase().includes(commObj.searchQuery.toUpperCase())
-  //       ) {
-  //         data.push(item);
-  //       }
-  //     });
-  //     console.log('data----->', data);
-  //     setCommObj(prev => ({
-  //       ...prev,
-  //       data: data,
-  //     }));
-  //   }
-  // }, [commObj.searchQuery]);
-
-  const getNotesHandler = () => {
-    getNotesData()
-      .then(res => {
-        console.log('res=====>', res);
-        setCommObj(prev => ({
-          ...prev,
-          data: res?.data,
-        }));
-      })
-      .catch(err => {
-        console.log('err=====>', err);
-      });
-  };
+    if (commObj.searchQuery !== '') {
+      searchNotes(commObj.searchQuery)
+        .then(res => {
+          console.log('search--->', res);
+          setCommObj(prev => ({
+            ...prev,
+            data: res?.data,
+          }));
+        })
+        .catch(err => {
+          console.log('search err=====>', err);
+        });
+    } else {
+      getNotesData()
+        .then(res => {
+          console.log('res=====>', res);
+          setCommObj(prev => ({
+            ...prev,
+            data: res?.data,
+          }));
+        })
+        .catch(err => {
+          console.log('err=====>', err);
+        });
+    }
+  }, [commObj.searchQuery]);
 
   const updateNoteHandler = (title, description, category) => {
     let obj = {
@@ -229,11 +222,8 @@ const MakeNotes = ({navigation}) => {
                 flexGrow: 1,
                 flexDirection: 'column',
                 rowGap: 15,
+                paddingBottom: 20,
               }}
-              columnWrapperStyle={{
-                columnGap: 15,
-              }}
-              numColumns={2}
               renderItem={({item}) => {
                 return (
                   <TouchableWithoutFeedback
@@ -250,11 +240,8 @@ const MakeNotes = ({navigation}) => {
                     }}>
                     <View
                       style={{
-                        width: '48%',
                         backgroundColor:
-                          commObj.bgColors[
-                            Math.floor(Math.random() * commObj.bgColors.length)
-                          ],
+                          bgColors[Math.floor(Math.random() * bgColors.length)],
                         borderRadius: 8,
                         paddingHorizontal: 8,
                         paddingVertical: 5,
