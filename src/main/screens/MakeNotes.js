@@ -12,8 +12,15 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 
 // const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
+const items = [
+  {label: 'personal', value: 'personal'},
+  {label: 'study', value: 'study'},
+  {label: 'whishlist', value: 'whishlist'},
+  {label: 'work', value: 'work'},
+  {label: 'other', value: 'other'},
+];
 const MakeNotes = ({navigation}) => {
-  const {getNotesData, postNotesData, deleteNotes, searchNotes} =
+  const {getNotesData, postNotesData, deleteNotes, searchNotes, updateNote} =
     useCreateRequest();
   const [commObj, setCommObj] = useState({
     searchQuery: '',
@@ -24,14 +31,6 @@ const MakeNotes = ({navigation}) => {
   });
   const [selectedValue, setSelectedValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  const items = [
-    {label: 'personal', value: 'personal'},
-    {label: 'study', value: 'study'},
-    {label: 'whishlist', value: 'whishlist'},
-    {label: 'work', value: 'work'},
-    {label: 'other', value: 'other'},
-  ];
 
   useEffect(() => {
     if (commObj.searchQuery !== '') {
@@ -114,6 +113,8 @@ const MakeNotes = ({navigation}) => {
       },
     );
   };
+
+  
 
   useEffect(() => {
     console.log('commObj------>', commObj);
@@ -262,7 +263,7 @@ const MakeNotes = ({navigation}) => {
                           paddingTop: 10,
                         }}>
                         <Text
-                          numberOfLines={4}
+                          numberOfLines={3}
                           ellipsizeMode="tail"
                           style={{
                             color: '#ffffff',

@@ -56,6 +56,22 @@ const useCreateRequest = () => {
     return createDeleteRequest(`notes/${id}`);
   };
 
+  const createPutRequest = async (params, data) => {
+    let requestUrl = baseUrl + params;
+    return axios
+      .put(requestUrl, data)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err;
+      });
+  };
+
+  const updateNote = (id, data) => {
+    return createPutRequest(`notes/${id}`, data);
+  };
+
   return {
     createGetRequst,
     getNotesData,
@@ -66,6 +82,9 @@ const useCreateRequest = () => {
 
     createDeleteRequest,
     deleteNotes,
+
+    createPutRequest,
+    updateNote,
   };
 };
 
