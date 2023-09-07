@@ -11,6 +11,7 @@ import {Modal} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {RefreshControl} from 'react-native';
 
 const bgColors = ['#293a4f', '#91162f', '#ff5f5f', '#80c341', '#bb19e3'];
 const items = [
@@ -37,6 +38,7 @@ const MakeNotes = ({navigation}) => {
     noteDescription: '',
     noteUpdate: false,
     noteId: null,
+    categoryArray: [],
   });
   const [selectedValue, setSelectedValue] = useState(null);
   const [searchSelectedValue, setSearchSelectedValue] = useState(null);
@@ -166,15 +168,18 @@ const MakeNotes = ({navigation}) => {
 
   const categoryFilterHandler = () => {
     console.log('searchSelectedValue----->', searchSelectedValue);
+    let tempArr = [];
     if (searchSelectedValue !== null) {
-      categoryNotes(searchSelectedValue)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      commObj.data.filter(item => {
+        if (item.category === searchSelectedValue) {
+          tempArr.push(item);
+        }
+      });
     }
+    setCommObj(prev => ({
+      ...prev,
+      categoryArray: tempArr,
+    }));
   };
 
   useEffect(() => {
@@ -250,6 +255,7 @@ const MakeNotes = ({navigation}) => {
           <View
             style={{
               paddingVertical: 20,
+              gap: 10,
             }}>
             <DropDownPicker
               style={{
@@ -288,7 +294,19 @@ const MakeNotes = ({navigation}) => {
           </View>
           {commObj.data.length > 0 ? (
             <FlatList
-              data={commObj.data}
+              data={
+                commObj.categoryArray.length > 0
+                  ? commObj.categoryArray
+                  : commObj.data
+              }
+              refreshControl={
+                <RefreshControl
+                  refreshing={false}
+                  onRefresh={() => {
+                    setSearchSelectedValue(null);
+                  }}
+                />
+              }
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 flexGrow: 1,

@@ -37,10 +37,10 @@
       "category": "work"
     },
     {
+      "id": 8,
       "title": "Recipes App\n",
       "description": "Do you want to help out your friends who struggle with cooking questions? You may not be good in the kitchen but you are good with react native right? you can put forth your React Native expertise to build a recipe application.",
-      "category": "whishlist",
-      "id": 8
+      "category": "whishlist"
     }
   ]
 }
