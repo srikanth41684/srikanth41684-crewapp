@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://10.0.2.2:3000/';
+const baseUrl = 'https://my-json-server.typicode.com/srikanth41684/srikanth41684-crewapp/';
 
 const useCreateRequest = () => {
   const createGetRequst = async params => {

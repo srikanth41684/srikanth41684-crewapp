@@ -7,10 +7,10 @@
       "category": "study"
     },
     {
+      "id": 3,
       "title": "Calculator",
       "description": "Math can be boring, but your calculators needn’t be so. Why not start building a cross-platform calculator application, putting to use the array of customizable components by React Native.",
-      "category": "study",
-      "id": 3
+      "category": "study"
     },
     {
       "title": "Stopwatch/timer Application",
